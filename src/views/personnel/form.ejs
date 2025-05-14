@@ -1,0 +1,82 @@
+<%- include('../partials/header') %>
+
+<h1><%= typeof fiche !== 'undefined' && fiche._id ? 'Modifier' : 'Ajouter' %> une Fiche de Personnel</h1>
+
+<% if (typeof error !== 'undefined' && error) { %>
+    <div class="message error">
+        <%= error %>
+    </div>
+<% } %>
+
+<form action="<%= typeof fiche !== 'undefined' && fiche._id ? '/personnel/update/' + fiche._id : '/personnel' %>" method="POST">
+    <div>
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" value="<%= typeof fiche !== 'undefined' ? fiche.nom : '' %>" required>
+    </div>
+    
+    <div>
+        <label for="prenoms">Prénoms :</label>
+        <input type="text" id="prenoms" name="prenoms" value="<%= typeof fiche !== 'undefined' ? fiche.prenoms : '' %>" required>
+    </div>
+    
+    <div>
+        <label for="phone">Téléphone :</label>
+        <input type="tel" id="phone" name="phone" value="<%= typeof fiche !== 'undefined' ? fiche.phone : '' %>" required>
+    </div>
+    
+    <div>
+        <label for="genre">Genre :</label>
+        <select id="genre" name="genre" required>
+            <option value="" disabled <%= typeof fiche === 'undefined' || !fiche.genre ? 'selected' : '' %>>Choisir un genre</option>
+            <option value="Masculin" <%= typeof fiche !== 'undefined' && fiche.genre === 'Masculin' ? 'selected' : '' %>>Masculin</option>
+            <option value="Féminin" <%= typeof fiche !== 'undefined' && fiche.genre === 'Féminin' ? 'selected' : '' %>>Féminin</option>
+            <option value="Autre" <%= typeof fiche !== 'undefined' && fiche.genre === 'Autre' ? 'selected' : '' %>>Autre</option>
+        </select>
+    </div>
+    
+    <div>
+        <label for="profession">Profession :</label>
+        <input type="text" id="profession" name="profession" value="<%= typeof fiche !== 'undefined' ? fiche.profession : '' %>" required>
+    </div>
+    
+    <div>
+        <label for="departement">Département :</label>
+        <input type="text" id="departement" name="departement" value="<%= typeof fiche !== 'undefined' ? fiche.departement : '' %>" required>
+    </div>
+    
+    <div>
+        <label for="salaire">Salaire (FCFA) :</label>
+        <input type="number" id="salaire" name="salaire" value="<%= typeof fiche !== 'undefined' ? fiche.salaire : '' %>" required min="0">
+    </div>
+    
+    <div>
+        <label for="dateEmbauche">Date d'embauche :</label>
+        <input type="date" id="dateEmbauche" name="dateEmbauche" 
+               value="<%= typeof fiche !== 'undefined' && fiche.dateEmbauche ? new Date(fiche.dateEmbauche).toISOString().split('T')[0] : '' %>" 
+               required>
+    </div>
+    
+    <div>
+        <label for="nombreEnfants">Nombre d'enfants :</label>
+        <input type="number" id="nombreEnfants" name="nombreEnfants" value="<%= typeof fiche !== 'undefined' ? fiche.nombreEnfants : '0' %>" min="0" required>
+    </div>
+    
+    <div>
+        <label for="situationMatrimoniale">Situation matrimoniale :</label>
+        <select id="situationMatrimoniale" name="situationMatrimoniale" required>
+            <option value="" disabled <%= typeof fiche === 'undefined' || !fiche.situationMatrimoniale ? 'selected' : '' %>>Choisir une situation</option>
+            <option value="Célibataire" <%= typeof fiche !== 'undefined' && fiche.situationMatrimoniale === 'Célibataire' ? 'selected' : '' %>>Célibataire</option>
+            <option value="Marié(e)" <%= typeof fiche !== 'undefined' && fiche.situationMatrimoniale === 'Marié(e)' ? 'selected' : '' %>>Marié(e)</option>
+            <option value="Divorcé(e)" <%= typeof fiche !== 'undefined' && fiche.situationMatrimoniale === 'Divorcé(e)' ? 'selected' : '' %>>Divorcé(e)</option>
+            <option value="Veuf/Veuve" <%= typeof fiche !== 'undefined' && fiche.situationMatrimoniale === 'Veuf/Veuve' ? 'selected' : '' %>>Veuf/Veuve</option>
+        </select>
+    </div>
+    
+    <button type="submit"><%= typeof fiche !== 'undefined' && fiche._id ? 'Mettre à jour' : 'Enregistrer' %></button>
+</form>
+
+<div class="form-actions">
+    <a href="/dashboard" class="action-button">Retour au tableau de bord</a>
+</div>
+
+<%- include('../partials/footer') %>

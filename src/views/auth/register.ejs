@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<h1>Inscription</h1>
+
+<% if (typeof error !== 'undefined' && error) { %>
+    <p style="color: red;"><%= error %></p>
+<% } %>
+<% if (typeof success !== 'undefined' && success) { %>
+    <p style="color: green;"><%= success %></p>
+<% } %>
+
+<form action="/auth/register" method="POST">
+    <div>
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" required>
+    </div>
+    <div>
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirmer le mot de passe :</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+    </div>
+    <button type="submit">S'inscrire</button>
+</form>
+<p>Déjà un compte ? <a href="/auth/login">Connectez-vous</a></p>
+
+<%- include('../partials/footer') %>

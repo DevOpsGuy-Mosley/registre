@@ -1,0 +1,32 @@
+<!-- filepath: c:\Dev\registre\src\views\personnel\list.ejs -->
+<%- include('../layouts/main.ejs') %>
+
+<h1>Liste du Personnel</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Poste</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% personnel.forEach(function(person) { %>
+            <tr>
+                <td><%= person._id %></td>
+                <td><%= person.name %></td>
+                <td><%= person.position %></td>
+                <td>
+                    <a href="/personnel/edit/<%= person._id %>">Modifier</a>
+                    <form action="/personnel/delete/<%= person._id %>" method="POST" style="display:inline;">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<a href="/personnel/create">Ajouter un nouveau personnel</a>

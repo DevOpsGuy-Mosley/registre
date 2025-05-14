@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+
+<h1>Tableau de bord</h1>
+<p>Bonjour, <%= typeof username !== 'undefined' ? username : 'Utilisateur' %> !</p>
+
+<div class="dashboard-actions">
+    <a href="/personnel/new" class="action-button add-button">
+        <span>+ Ajouter une personne</span>
+    </a>
+</div>
+
+<% if (personnels && personnels.length > 0) { %>
+    <div class="table-container">
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénoms</th>
+                    <th>Téléphone</th>
+                    <th>Genre</th>
+                    <th>Profession</th>
+                    <th>Département</th>
+                    <th>Salaire (FCFA)</th>
+                    <th>Date d'embauche</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% personnels.forEach(personnel => { %>
+                    <tr>
+                        <td><%= personnel.nom %></td>
+                        <td><%= personnel.prenoms %></td>
+                        <td><%= personnel.phone %></td>
+                        <td><%= personnel.genre %></td>
+                        <td><%= personnel.profession %></td>
+                        <td><%= personnel.departement %></td>
+                        <td><%= personnel.salaire.toLocaleString('fr-FR') %> FCFA</td>
+                        <td><%= new Date(personnel.dateEmbauche).toLocaleDateString('fr-FR') %></td>
+                        <td class="actions">
+                            <a href="/personnel/edit/<%= personnel._id %>" class="action-button edit-button">Modifier</a>
+                            <button onclick="confirmDelete('<%= personnel._id %>')" class="action-button delete-button">Supprimer</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+<% } else { %>
+    <p>Aucune fiche de personnel n'a été ajoutée.</p>
+    <p>Commencez par <a href="/personnel/new">ajouter une nouvelle fiche</a>.</p>
+<% } %>
+
+<!-- Dialog de confirmation de suppression -->
+<div id="deleteDialog" class="confirm-dialog" style="display: none;">
+    <h2>Confirmer la suppression</h2>
+    <p>Êtes-vous sûr de vouloir supprimer cette fiche ?</p>
+    <div class="buttons">
+        <button onclick="cancelDelete()" class="action-button">Annuler</button>
+        <button onclick="proceedDelete()" class="action-button delete-button">Supprimer</button>
+    </div>
+</div>
+<div id="overlay" class="overlay" style="display: none;"></div>
+
+<script>
+let deleteId = null;
+
+function confirmDelete(id) {
+    deleteId = id;
+    document.getElementById('deleteDialog').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+function cancelDelete() {
+    deleteId = null;
+    document.getElementById('deleteDialog').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+function proceedDelete() {
+    if (deleteId) {
+        window.location.href = `/personnel/delete/${deleteId}`;
+    }
+}
+</script>
+
+<%- include('partials/footer') %>

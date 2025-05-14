@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+            <% if (title !== 'Tableau de bord' && !title.includes('Fiche Personnel')) { %>
+                <a href="/">Accueil</a>
+            <% } %>
+            <a href="/dashboard">Tableau de bord</a>
+            <a href="/personnel/new">Remplir la fiche du personnel</a>
+            <a href="/auth/logout">Déconnexion (<%= typeof username !== 'undefined' ? username : '' %>)</a>
+        <% } else { %>
+            <a href="/">Accueil</a>
+            <a href="/auth/login">Connexion</a>
+            <a href="/auth/register">Inscription</a>
+        <% } %>
+    </nav>
+    <main>
+        <% if (typeof message !== 'undefined' && message) { %>
+            <div class="message <%= message.type %>">
+                <%= message.text %>
+            </div>
+        <% } %>

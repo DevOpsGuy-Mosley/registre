@@ -1,0 +1,22 @@
+<!-- filepath: c:\Dev\registre\src\views\personnel\create.ejs -->
+<%- include('../layouts/main.ejs') %>
+
+<h1>Créer un nouveau personnel</h1>
+
+<form action="/personnel" method="POST">
+    <div>
+        <label for="name">Nom:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="position">Poste:</label>
+        <input type="text" id="position" name="position" required>
+    </div>
+    <div>
+        <label for="department">Département:</label>
+        <input type="text" id="department" name="department" required>
+    </div>
+    <button type="submit">Créer</button>
+</form>
+
+<a href="/personnel">Retour à la liste</a>
