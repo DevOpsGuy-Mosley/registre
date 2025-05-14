@@ -78,8 +78,3 @@ app.get('/dashboard', isAuthenticated, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
-
-// app.js (extrait)
-// ... autres configurations ...
-
-// ... reste de app.js ...
